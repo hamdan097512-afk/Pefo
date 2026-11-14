@@ -1,0 +1,1222 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hamdan P — AI & Computing Portfolio + Interactive Builder</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+          }
+        }
+      }
+    };
+  </script>
+  <style>
+    :root {
+      --accent-primary: #6366f1;
+      --accent-secondary: #818cf8;
+      --accent-soft: rgba(99, 102, 241, 0.14);
+    }
+    [data-accent="emerald"] {
+      --accent-primary: #10b981;
+      --accent-secondary: #34d399;
+      --accent-soft: rgba(16, 185, 129, 0.14);
+    }
+    [data-accent="cyan"] {
+      --accent-primary: #06b6d4;
+      --accent-secondary: #22d3ee;
+      --accent-soft: rgba(6, 182, 212, 0.14);
+    }
+    [data-accent="rose"] {
+      --accent-primary: #f43f5e;
+      --accent-secondary: #fb7185;
+      --accent-soft: rgba(244, 63, 94, 0.14);
+    }
+    .accent-bg { background-color: var(--accent-primary); }
+    .accent-bg-hover:hover { filter: brightness(1.08); }
+    .accent-text { color: var(--accent-primary); }
+    .accent-border { border-color: var(--accent-primary); }
+    .accent-pill {
+      background-color: var(--accent-soft);
+      color: var(--accent-primary);
+    }
+    .dark .accent-pill {
+      color: var(--accent-secondary);
+    }
+    html { scroll-behavior: smooth; }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100 font-sans antialiased selection:bg-indigo-500 selection:text-white transition-colors duration-200 min-h-screen flex flex-col" data-accent="indigo">
+
+  <!-- Toast Notification -->
+  <div id="toastContainer" class="fixed bottom-5 right-5 z-50 pointer-events-none flex flex-col gap-2 max-w-sm w-full px-4 sm:px-0"></div>
+
+  <!-- Top Navigation -->
+  <header class="sticky top-0 z-40 backdrop-blur-md bg-white/85 dark:bg-slate-900/85 border-b border-slate-200/80 dark:border-slate-800/80">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-3">
+      <div class="flex items-center gap-3 min-w-0">
+        <div id="navAvatar" class="w-9 h-9 rounded-xl accent-bg text-white font-bold flex items-center justify-center shadow-sm shrink-0 text-sm">
+          HP
+        </div>
+        <div class="truncate">
+          <span id="navName" class="font-bold text-sm sm:text-base tracking-tight block truncate">Hamdan P</span>
+          <span class="text-xs text-slate-500 dark:text-slate-400 block truncate">CSE (AI) • Portfolio</span>
+        </div>
+      </div>
+
+      <!-- Desktop Nav Links -->
+      <nav class="hidden md:flex items-center gap-1 text-sm font-medium">
+        <button type="button" data-scroll="heroSection" class="nav-scroll-btn px-3 py-1.5 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition">Overview</button>
+        <button type="button" data-scroll="projectsSection" class="nav-scroll-btn px-3 py-1.5 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition">Projects</button>
+        <button type="button" data-scroll="skillsSection" class="nav-scroll-btn px-3 py-1.5 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition">Skills</button>
+        <button type="button" data-scroll="educationSection" class="nav-scroll-btn px-3 py-1.5 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition">Education</button>
+        <button type="button" data-scroll="builderSection" class="nav-scroll-btn px-3 py-1.5 rounded-lg accent-pill font-semibold transition">Customize & Guide</button>
+      </nav>
+
+      <!-- Theme & Action Controls -->
+      <div class="flex items-center gap-2 shrink-0">
+        <!-- Accent Selector -->
+        <div class="hidden sm:flex items-center gap-1 bg-slate-100 dark:bg-slate-800 p-1 rounded-lg border border-slate-200 dark:border-slate-700" role="group" aria-label="Theme color">
+          <button type="button" data-theme-accent="indigo" title="Indigo theme" class="accent-swatch w-5 h-5 rounded-md bg-indigo-500 ring-2 ring-offset-1 ring-indigo-500 dark:ring-offset-slate-900"></button>
+          <button type="button" data-theme-accent="emerald" title="Emerald theme" class="accent-swatch w-5 h-5 rounded-md bg-emerald-500 opacity-70 hover:opacity-100"></button>
+          <button type="button" data-theme-accent="cyan" title="Cyan theme" class="accent-swatch w-5 h-5 rounded-md bg-cyan-500 opacity-70 hover:opacity-100"></button>
+          <button type="button" data-theme-accent="rose" title="Rose theme" class="accent-swatch w-5 h-5 rounded-md bg-rose-500 opacity-70 hover:opacity-100"></button>
+        </div>
+
+        <!-- Dark Mode Button -->
+        <button type="button" id="themeToggleBtn" class="p-2 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-slate-200 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700 transition" title="Toggle light/dark mode" aria-label="Toggle light/dark mode">
+          <svg id="sunIcon" class="w-4 h-4 hidden dark:block" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="5"></circle>
+            <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"></path>
+          </svg>
+          <svg id="moonIcon" class="w-4 h-4 block dark:hidden" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+        </button>
+
+        <!-- Export Portfolio Button -->
+        <button type="button" id="copyPortfolioBtn" class="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold accent-bg accent-bg-hover text-white shadow-sm transition">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+          </svg>
+          Copy Summary
+        </button>
+
+        <!-- Mobile Menu Button -->
+        <button type="button" id="mobileMenuBtn" class="md:hidden p-2 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700" aria-label="Open navigation menu">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Dropdown Nav -->
+    <div id="mobileNavPanel" class="hidden md:hidden border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-4 py-3 space-y-2">
+      <div class="grid grid-cols-2 gap-1.5 text-sm font-medium">
+        <button type="button" data-scroll="heroSection" class="nav-scroll-btn text-left px-3 py-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800">Overview</button>
+        <button type="button" data-scroll="projectsSection" class="nav-scroll-btn text-left px-3 py-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800">Projects</button>
+        <button type="button" data-scroll="skillsSection" class="nav-scroll-btn text-left px-3 py-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800">Skills</button>
+        <button type="button" data-scroll="educationSection" class="nav-scroll-btn text-left px-3 py-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800">Education</button>
+        <button type="button" data-scroll="builderSection" class="nav-scroll-btn text-left px-3 py-2 rounded-lg accent-pill font-semibold col-span-2">Customize & Portfolio Guide</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="flex-1 max-w-6xl w-full mx-auto px-4 sm:px-6 py-8 sm:py-12 space-y-14">
+
+    <!-- HERO SECTION -->
+    <section id="heroSection" class="relative rounded-3xl bg-white dark:bg-slate-900 border border-slate-200/90 dark:border-slate-800 p-6 sm:p-10 shadow-sm overflow-hidden">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+        <div class="lg:col-span-8 space-y-5">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold accent-pill">
+            <span class="w-2 h-2 rounded-full accent-bg animate-pulse"></span>
+            <span id="heroBadge">B.Tech CSE (AI) @ Joy University × NIAT • Open to Internships & Projects</span>
+          </div>
+
+          <div class="space-y-2">
+            <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight leading-tight">
+              Hi, I'm <span id="heroName" class="accent-text">Hamdan P</span>
+            </h1>
+            <p id="heroHeadline" class="text-lg sm:text-xl font-medium text-slate-600 dark:text-slate-300">
+              AI & Computer Science Undergraduate • Young Innovator • Systems & Network Technologist
+            </p>
+          </div>
+
+          <p id="heroBio" class="text-sm sm:text-base text-slate-600 dark:text-slate-400 leading-relaxed max-w-2xl">
+            Pursuing Computer Science & Engineering (Artificial Intelligence) at Joy University in association with NxtWave Institute of Advanced Technologies (NIAT). Experienced in Generative AI prototyping with Google AI Studio, Linux & TCP/IP networking infrastructure, and state-level innovation programs through K-DISC's Young Innovators Programme (YIP).
+          </p>
+
+          <!-- Key Quick Metadata -->
+          <div class="flex flex-wrap items-center gap-3 text-xs sm:text-sm text-slate-600 dark:text-slate-400 pt-1">
+            <div class="inline-flex items-center gap-1.5 bg-slate-100 dark:bg-slate-800/90 px-3 py-1.5 rounded-lg">
+              <svg class="w-4 h-4 accent-text shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+              </svg>
+              <span id="heroLocation">Kerala / Bengaluru, India</span>
+            </div>
+            <a id="heroEmailLink" href="mailto:hamdan097512@gmail.com" class="inline-flex items-center gap-1.5 bg-slate-100 dark:bg-slate-800/90 hover:bg-slate-200 dark:hover:bg-slate-800 px-3 py-1.5 rounded-lg transition">
+              <svg class="w-4 h-4 accent-text shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+              </svg>
+              <span id="heroEmailText">hamdan097512@gmail.com</span>
+            </a>
+            <a id="heroLinkedinLink" href="https://in.linkedin.com/in/hamdan-h-310702317" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 bg-slate-100 dark:bg-slate-800/90 hover:bg-slate-200 dark:hover:bg-slate-800 px-3 py-1.5 rounded-lg transition">
+              <svg class="w-4 h-4 accent-text shrink-0" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"></path>
+              </svg>
+              <span id="heroLinkedinText">linkedin.com/in/hamdan-h-310702317</span>
+            </a>
+          </div>
+
+          <!-- CTA Buttons -->
+          <div class="flex flex-wrap items-center gap-3 pt-2">
+            <button type="button" data-scroll="projectsSection" class="nav-scroll-btn px-5 py-2.5 rounded-xl font-semibold text-sm accent-bg accent-bg-hover text-white shadow-sm transition inline-flex items-center gap-2">
+              Explore Projects & Initiatives
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+              </svg>
+            </button>
+            <button type="button" data-scroll="builderSection" class="nav-scroll-btn px-5 py-2.5 rounded-xl font-semibold text-sm bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 border border-slate-200 dark:border-slate-700 transition inline-flex items-center gap-2">
+              <svg class="w-4 h-4 accent-text" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+              </svg>
+              Edit / Customize Portfolio
+            </button>
+          </div>
+        </div>
+
+        <!-- Right Card: Live Portfolio Stats & Visual Identity -->
+        <div class="lg:col-span-4">
+          <div class="rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700/80 p-5 space-y-4">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-semibold uppercase tracking-wider text-slate-400">Portfolio Snapshot</span>
+              <span id="readinessBadge" class="text-xs font-bold px-2.5 py-0.5 rounded-full accent-pill">100% Ready</span>
+            </div>
+
+            <div class="grid grid-cols-2 gap-3">
+              <div class="p-3.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200/70 dark:border-slate-800">
+                <div id="statProjectsCount" class="text-2xl font-extrabold accent-text">4</div>
+                <div class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Featured Initiatives</div>
+              </div>
+              <div class="p-3.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200/70 dark:border-slate-800">
+                <div id="statSkillsCount" class="text-2xl font-extrabold accent-text">12</div>
+                <div class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Technical Skills</div>
+              </div>
+              <div class="p-3.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200/70 dark:border-slate-800">
+                <div class="text-2xl font-extrabold accent-text">CSE-AI</div>
+                <div class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">NIAT × Joy Univ</div>
+              </div>
+              <div class="p-3.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200/70 dark:border-slate-800">
+                <div class="text-2xl font-extrabold accent-text">YIP</div>
+                <div class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">K-DISC Innovator</div>
+              </div>
+            </div>
+
+            <div class="pt-1 border-t border-slate-200 dark:border-slate-700/70 flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
+              <span>Core Focus</span>
+              <span class="font-semibold text-slate-700 dark:text-slate-200">Generative AI & Systems</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROJECTS & INITIATIVES SECTION -->
+    <section id="projectsSection" class="space-y-6">
+      <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+        <div>
+          <span class="text-xs font-bold uppercase tracking-wider accent-text">Proof of Work</span>
+          <h2 class="text-2xl sm:text-3xl font-bold tracking-tight mt-1">Projects & Innovation Initiatives</h2>
+          <p class="text-sm text-slate-600 dark:text-slate-400 mt-1">
+            Hands-on technical work, generative AI exploration, and national/state innovation programs.
+          </p>
+        </div>
+        <button type="button" id="openNewProjectBtn" class="self-start sm:self-auto inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-semibold accent-bg accent-bg-hover text-white shadow-sm transition">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"></path>
+          </svg>
+          Add Project
+        </button>
+      </div>
+
+      <!-- Filter Bar & Search -->
+      <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 bg-white dark:bg-slate-900 p-3 rounded-2xl border border-slate-200 dark:border-slate-800">
+        <div id="projectCategoryTabs" class="flex flex-wrap items-center gap-1.5">
+          <button type="button" data-proj-cat="All" class="proj-tab-btn px-3 py-1.5 rounded-xl text-xs font-semibold accent-bg text-white transition">All</button>
+          <button type="button" data-proj-cat="AI & Tech" class="proj-tab-btn px-3 py-1.5 rounded-xl text-xs font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition">AI & Tech</button>
+          <button type="button" data-proj-cat="Systems & Networking" class="proj-tab-btn px-3 py-1.5 rounded-xl text-xs font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition">Systems & Networking</button>
+          <button type="button" data-proj-cat="Innovation & Civic" class="proj-tab-btn px-3 py-1.5 rounded-xl text-xs font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition">Innovation & Civic</button>
+        </div>
+
+        <div class="relative min-w-[220px]">
+          <input id="projectSearchInput" type="text" placeholder="Search projects or tags..." class="w-full pl-8 pr-3 py-1.5 text-xs rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+          <svg class="w-3.5 h-3.5 text-slate-400 absolute left-2.5 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <circle cx="11" cy="11" r="8"></circle>
+            <path d="M21 21l-4.35-4.35"></path>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Project Cards Grid -->
+      <div id="projectsGrid" class="grid grid-cols-1 md:grid-cols-2 gap-5"></div>
+    </section>
+
+    <!-- SKILLS & TECHNICAL DOMAINS SECTION -->
+    <section id="skillsSection" class="space-y-6">
+      <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+        <div>
+          <span class="text-xs font-bold uppercase tracking-wider accent-text">Capabilities</span>
+          <h2 class="text-2xl sm:text-3xl font-bold tracking-tight mt-1">Technical Skills & Tooling</h2>
+          <p class="text-sm text-slate-600 dark:text-slate-400 mt-1">
+            Combining AI engineering foundations with practical computer hardware, Linux, and network administration.
+          </p>
+        </div>
+
+        <!-- Skill Category Filter -->
+        <div id="skillCategoryTabs" class="flex flex-wrap gap-1.5">
+          <button type="button" data-skill-cat="All" class="skill-tab-btn px-3 py-1.5 rounded-xl text-xs font-semibold accent-bg text-white transition">All Domains</button>
+          <button type="button" data-skill-cat="AI & Software" class="skill-tab-btn px-3 py-1.5 rounded-xl text-xs font-semibold bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-300">AI & Software</button>
+          <button type="button" data-skill-cat="Systems & Networking" class="skill-tab-btn px-3 py-1.5 rounded-xl text-xs font-semibold bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-300">Systems & Networking</button>
+          <button type="button" data-skill-cat="Digital & Communication" class="skill-tab-btn px-3 py-1.5 rounded-xl text-xs font-semibold bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-300">Digital & Communication</button>
+        </div>
+      </div>
+
+      <div id="skillsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+    </section>
+
+    <!-- EDUCATION & CREDENTIALS SECTION -->
+    <section id="educationSection" class="space-y-6">
+      <div>
+        <span class="text-xs font-bold uppercase tracking-wider accent-text">Academic Background</span>
+        <h2 class="text-2xl sm:text-3xl font-bold tracking-tight mt-1">Education & Training</h2>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+        <!-- Education 1 -->
+        <div class="rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 flex flex-col justify-between space-y-4">
+          <div class="space-y-2">
+            <div class="flex items-center justify-between gap-2">
+              <span class="px-2.5 py-1 rounded-lg text-xs font-semibold accent-pill">2026 – Present</span>
+              <span class="text-xs font-medium text-slate-400">Undergraduate Program</span>
+            </div>
+            <h3 class="text-lg font-bold">B.Tech in Computer Science & Engineering (AI)</h3>
+            <p class="text-sm font-medium accent-text">Joy University × NxtWave Institute of Advanced Technologies (NIAT)</p>
+            <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+              Qualified the NxtWave Admission Test (NAT) and enrolled in an industry-aligned Computer Science & Artificial Intelligence curriculum focused on real-world software engineering, generative AI models, and modern developer workflows.
+            </p>
+          </div>
+          <div class="flex flex-wrap gap-1.5 pt-2">
+            <span class="px-2.5 py-1 rounded-md text-xs bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300">Artificial Intelligence</span>
+            <span class="px-2.5 py-1 rounded-md text-xs bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300">NAT Qualifier</span>
+            <span class="px-2.5 py-1 rounded-md text-xs bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300">Software Engineering</span>
+          </div>
+        </div>
+
+        <!-- Education 2 -->
+        <div class="rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 flex flex-col justify-between space-y-4">
+          <div class="space-y-2">
+            <div class="flex items-center justify-between gap-2">
+              <span class="px-2.5 py-1 rounded-lg text-xs font-semibold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300">2024 – 2026</span>
+              <span class="text-xs font-medium text-slate-400">NSQF Vocational Track</span>
+            </div>
+            <h3 class="text-lg font-bold">Higher Secondary (Vocational) — Field Technician: Computing & Peripherals</h3>
+            <p class="text-sm font-medium accent-text">Directorate of General Education (VHSE), Kerala</p>
+            <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+              NSQF-aligned technical training in computer hardware architecture (SO-DIMM/RAM, motherboards, peripherals), Linux operating system commands and file permissions, Windows Server 2016 administration, and TCP/IP networking.
+            </p>
+          </div>
+          <div class="flex flex-wrap gap-1.5 pt-2">
+            <span class="px-2.5 py-1 rounded-md text-xs bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300">Linux CLI & OS</span>
+            <span class="px-2.5 py-1 rounded-md text-xs bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300">TCP/IP Networking</span>
+            <span class="px-2.5 py-1 rounded-md text-xs bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300">Hardware Diagnostics</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- INTERACTIVE PORTFOLIO BUILDER & HOW-TO GUIDE SECTION -->
+    <section id="builderSection" class="rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 sm:p-8 shadow-sm space-y-8">
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-200 dark:border-slate-800 pb-5">
+        <div>
+          <span class="text-xs font-bold uppercase tracking-wider accent-text">Interactive Portfolio Studio</span>
+          <h2 class="text-2xl font-bold tracking-tight mt-1">Customize Your Portfolio & Step-by-Step Guide</h2>
+          <p class="text-sm text-slate-600 dark:text-slate-400 mt-1">
+            Edit your profile details, add new projects or skills, and track the 5 building blocks of a standout portfolio.
+          </p>
+        </div>
+        <div class="flex items-center gap-2">
+          <button type="button" id="downloadHtmlBtn" class="px-4 py-2 rounded-xl text-xs font-semibold accent-bg accent-bg-hover text-white shadow-sm transition inline-flex items-center gap-1.5">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+            </svg>
+            Download HTML File
+          </button>
+          <button type="button" id="resetDefaultBtn" class="px-3.5 py-2 rounded-xl text-xs font-semibold bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 transition">
+            Reset Defaults
+          </button>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+        <!-- Left Column: Live Profile & Skill Editor -->
+        <div class="lg:col-span-7 space-y-6">
+          <h3 class="text-base font-bold flex items-center gap-2">
+            <span class="w-6 h-6 rounded-lg accent-pill flex items-center justify-center text-xs font-bold">1</span>
+            Edit Profile & Positioning
+          </h3>
+
+          <form id="profileEditorForm" class="space-y-4">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label for="editName" class="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1">Full Name</label>
+                <input id="editName" type="text" class="w-full px-3 py-2 text-sm rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-indigo-500" required />
+              </div>
+              <div>
+                <label for="editLocation" class="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1">Location</label>
+                <input id="editLocation" type="text" class="w-full px-3 py-2 text-sm rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-indigo-500" required />
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label for="editEmail" class="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1">Contact Email</label>
+                <input id="editEmail" type="email" class="w-full px-3 py-2 text-sm rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-indigo-500" required />
+              </div>
+              <div>
+                <label for="editBadge" class="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1">Status Badge</label>
+                <input id="editBadge" type="text" class="w-full px-3 py-2 text-sm rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-indigo-500" required />
+              </div>
+            </div>
+
+            <div>
+              <label for="editLinkedin" class="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1">LinkedIn Profile URL</label>
+              <input id="editLinkedin" type="url" placeholder="https://in.linkedin.com/in/hamdan-h-310702317" class="w-full px-3 py-2 text-sm rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-indigo-500" required />
+            </div>
+
+            <div>
+              <label for="editHeadline" class="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1">Professional Headline</label>
+              <input id="editHeadline" type="text" class="w-full px-3 py-2 text-sm rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-indigo-500" required />
+            </div>
+
+            <div>
+              <label for="editBio" class="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1">About / Summary Bio</label>
+              <textarea id="editBio" rows="3" class="w-full px-3 py-2 text-sm rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-indigo-500" required></textarea>
+            </div>
+
+            <div class="flex items-center justify-end">
+              <button type="submit" class="px-4 py-2 rounded-xl text-xs font-semibold accent-bg accent-bg-hover text-white shadow-sm transition">
+                Save Profile Changes
+              </button>
+            </div>
+          </form>
+
+          <!-- Quick Add Skill Form -->
+          <div class="pt-4 border-t border-slate-200 dark:border-slate-800 space-y-3">
+            <h3 class="text-base font-bold flex items-center gap-2">
+              <span class="w-6 h-6 rounded-lg accent-pill flex items-center justify-center text-xs font-bold">2</span>
+              Add a New Skill to Matrix
+            </h3>
+            <form id="addSkillForm" class="grid grid-cols-1 sm:grid-cols-12 gap-2.5">
+              <input id="newSkillName" type="text" placeholder="Skill name (e.g. Python, React)" class="sm:col-span-5 px-3 py-2 text-xs rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700" required />
+              <select id="newSkillCat" class="sm:col-span-4 px-3 py-2 text-xs rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
+                <option value="AI & Software">AI & Software</option>
+                <option value="Systems & Networking">Systems & Networking</option>
+                <option value="Digital & Communication">Digital & Communication</option>
+              </select>
+              <button type="submit" class="sm:col-span-3 px-3 py-2 rounded-xl text-xs font-semibold accent-bg accent-bg-hover text-white transition">
+                + Add Skill
+              </button>
+            </form>
+          </div>
+        </div>
+
+        <!-- Right Column: How to Make Your Portfolio Checklist -->
+        <div class="lg:col-span-5 space-y-4">
+          <div class="rounded-2xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700/80 p-5 space-y-4">
+            <div class="flex items-center justify-between">
+              <h3 class="text-base font-bold">How to Make a Great Portfolio</h3>
+              <span id="checklistProgressText" class="text-xs font-bold accent-text">5 / 5 Complete</span>
+            </div>
+            <p class="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
+              Follow these 5 essential steps to build and publish your portfolio. Click any step to toggle or verify:
+            </p>
+
+            <div id="checklistContainer" class="space-y-2.5"></div>
+
+            <div class="p-3.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 space-y-1.5">
+              <div class="text-xs font-bold text-slate-800 dark:text-slate-200">Free Hosting Tip (Next Step)</div>
+              <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
+                Click <strong>Download HTML File</strong> above, rename it to <code class="px-1 py-0.5 rounded bg-slate-100 dark:bg-slate-800">index.html</code>, and upload it to <strong>GitHub Pages</strong>, <strong>Netlify Drop</strong>, or <strong>Vercel</strong> to publish your live web link for free in under 60 seconds.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT FOOTER SECTION -->
+    <section id="contactSection" class="rounded-3xl bg-slate-900 text-white p-6 sm:p-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+      <div class="space-y-2 max-w-xl">
+        <span class="text-xs font-bold uppercase tracking-wider text-indigo-400">Get In Touch</span>
+        <h2 class="text-2xl sm:text-3xl font-bold tracking-tight">Let's Connect on AI, Tech & Innovation</h2>
+        <p class="text-sm text-slate-300">
+          Open to collaborating on AI applications, student innovation initiatives, and software/systems engineering internships.
+        </p>
+      </div>
+      <div class="flex flex-wrap items-center gap-3">
+        <a id="footerEmailBtn" href="mailto:hamdan097512@gmail.com" class="px-5 py-2.5 rounded-xl text-sm font-semibold accent-bg accent-bg-hover text-white shadow-sm transition inline-flex items-center gap-2">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+          </svg>
+          Email Hamdan
+        </a>
+        <a id="footerLinkedinBtn" href="https://in.linkedin.com/in/hamdan-h-310702317" target="_blank" rel="noopener noreferrer" class="px-5 py-2.5 rounded-xl text-sm font-semibold bg-[#0a66c2] hover:bg-[#004182] text-white shadow-sm transition inline-flex items-center gap-2">
+          <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"></path>
+          </svg>
+          LinkedIn Profile
+        </a>
+        <button type="button" id="copyEmailQuickBtn" class="px-4 py-2.5 rounded-xl text-sm font-semibold bg-slate-800 hover:bg-slate-700 text-slate-100 border border-slate-700 transition">
+          Copy Email Address
+        </button>
+      </div>
+    </section>
+  </main>
+
+  <!-- PROJECT DETAIL & ADD/EDIT MODAL -->
+  <div id="projectModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-950/70 backdrop-blur-sm p-4">
+    <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl max-w-lg w-full p-6 shadow-xl space-y-5 max-h-[90vh] overflow-y-auto">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <span id="modalSubtitle" class="text-xs font-bold uppercase tracking-wider accent-text">Project Details</span>
+          <h3 id="modalTitle" class="text-xl font-bold mt-0.5">Project Title</h3>
+        </div>
+        <button type="button" id="closeModalBtn" class="p-1.5 rounded-lg text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path>
+          </svg>
+        </button>
+      </div>
+
+      <!-- View Mode Content -->
+      <div id="modalViewContent" class="space-y-4">
+        <div class="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400">
+          <span id="modalCategoryPill" class="px-2.5 py-0.5 rounded-full font-semibold accent-pill"></span>
+          <span>•</span>
+          <span id="modalTimeframe"></span>
+        </div>
+        <p id="modalDescription" class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed"></p>
+        <div>
+          <div class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Key Highlights & Outcomes</div>
+          <ul id="modalHighlights" class="space-y-1.5 text-xs sm:text-sm text-slate-600 dark:text-slate-300 list-disc list-inside"></ul>
+        </div>
+        <div id="modalTags" class="flex flex-wrap gap-1.5 pt-2"></div>
+        <div class="flex items-center justify-end gap-2 pt-4 border-t border-slate-200 dark:border-slate-800">
+          <button type="button" id="deleteProjectBtn" class="px-3.5 py-2 rounded-xl text-xs font-semibold text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/40 transition">
+            Delete
+          </button>
+          <button type="button" id="switchToEditProjectBtn" class="px-4 py-2 rounded-xl text-xs font-semibold accent-bg text-white transition">
+            Edit Project
+          </button>
+        </div>
+      </div>
+
+      <!-- Form Mode Content (Add / Edit Project) -->
+      <form id="projectFormContent" class="hidden space-y-4">
+        <input type="hidden" id="formProjectId" />
+        <div>
+          <label for="formProjTitle" class="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1">Project / Initiative Title</label>
+          <input id="formProjTitle" type="text" placeholder="e.g. AI Study Assistant with Gemini API" class="w-full px-3 py-2 text-sm rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700" required />
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label for="formProjCat" class="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1">Category</label>
+            <select id="formProjCat" class="w-full px-3 py-2 text-sm rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
+              <option value="AI & Tech">AI & Tech</option>
+              <option value="Systems & Networking">Systems & Networking</option>
+              <option value="Innovation & Civic">Innovation & Civic</option>
+            </select>
+          </div>
+          <div>
+            <label for="formProjTime" class="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1">Timeframe</label>
+            <input id="formProjTime" type="text" placeholder="e.g. 2026" class="w-full px-3 py-2 text-sm rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700" required />
+          </div>
+        </div>
+        <div>
+          <label for="formProjDesc" class="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1">Summary Description</label>
+          <textarea id="formProjDesc" rows="3" placeholder="Describe what you built, the problem it solves, and tools used..." class="w-full px-3 py-2 text-sm rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700" required></textarea>
+        </div>
+        <div>
+          <label for="formProjHighlights" class="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1">Key Highlights (one per line)</label>
+          <textarea id="formProjHighlights" rows="3" placeholder="Integrated Gemini API for fast synthesis&#10;Built responsive UI with Tailwind CSS" class="w-full px-3 py-2 text-sm rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700"></textarea>
+        </div>
+        <div>
+          <label for="formProjTags" class="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1">Technologies / Tags (comma-separated)</label>
+          <input id="formProjTags" type="text" placeholder="Gemini API, Python, Prompt Engineering" class="w-full px-3 py-2 text-sm rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700" required />
+        </div>
+        <div class="flex items-center justify-end gap-2 pt-3 border-t border-slate-200 dark:border-slate-800">
+          <button type="button" id="cancelProjFormBtn" class="px-4 py-2 rounded-xl text-xs font-semibold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300">
+            Cancel
+          </button>
+          <button type="submit" class="px-4 py-2 rounded-xl text-xs font-semibold accent-bg text-white shadow-sm">
+            Save Project
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    const DEFAULT_STATE = {
+      accent: 'indigo',
+      darkMode: true,
+      activeProjectCat: 'All',
+      projectSearch: '',
+      activeSkillCat: 'All',
+      activeModalProjectId: null,
+      profile: {
+        name: 'Hamdan P',
+        badge: 'B.Tech CSE (AI) @ Joy University × NIAT • Open to Internships & Projects',
+        headline: 'AI & Computer Science Undergraduate • Young Innovator • Systems & Network Technologist',
+        bio: 'Pursuing Computer Science & Engineering (Artificial Intelligence) at Joy University in association with NxtWave Institute of Advanced Technologies (NIAT). Experienced in Generative AI prototyping with Google AI Studio, Linux & TCP/IP networking infrastructure, and state-level innovation programs through K-DISC\'s Young Innovators Programme (YIP).',
+        location: 'Kerala / Bengaluru, India',
+        email: 'hamdan097512@gmail.com',
+        linkedin: 'https://in.linkedin.com/in/hamdan-h-310702317'
+      },
+      projects: [
+        {
+          id: 'proj-yip',
+          title: 'Young Innovators Programme (YIP) Idea Submission',
+          category: 'Innovation & Civic',
+          timeframe: '2025 – 2026',
+          description: 'Participated in the Kerala Development and Innovation Strategic Council (K-DISC) flagship state innovation initiative, formulating structured problem statements and community-centered technological solutions.',
+          highlights: [
+            'Registered and verified innovation proposals on the official YIP Kerala portal (2025 & 2026 cohorts).',
+            'Collaborated on regional problem identification and structured design-thinking workflows.',
+            'Engaged with state-level innovation mentors and evaluation frameworks.'
+          ],
+          tags: ['K-DISC YIP', 'Design Thinking', 'Social Innovation', 'Problem Solving']
+        },
+        {
+          id: 'proj-genai',
+          title: 'Generative AI Prototyping with Google AI Studio',
+          category: 'AI & Tech',
+          timeframe: '2026',
+          description: 'Hands-on exploration of Large Language Models (LLMs), API key orchestration, and structured prompt engineering using Google AI Studio, Gemini models, and OpenAI workflows.',
+          highlights: [
+            'Configured Gemini API keys in Google AI Studio to test multi-turn reasoning and structured outputs.',
+            'Designed reusable prompt templates for document synthesis, study automation, and code generation.',
+            'Pursuing specialized CSE (Artificial Intelligence) coursework through NIAT × Joy University.'
+          ],
+          tags: ['Google AI Studio', 'Gemini API', 'Prompt Engineering', 'Generative AI']
+        },
+        {
+          id: 'proj-networking',
+          title: 'Linux Systems & TCP/IP Network Infrastructure Lab',
+          category: 'Systems & Networking',
+          timeframe: '2024 – 2026',
+          description: 'Practical computing and network engineering lab work completed under the NSQF Field Technician (Computing and Peripherals) curriculum, covering OS administration, network topologies, and hardware diagnostics.',
+          highlights: [
+            'Configured dual-boot Linux/Windows environments, Linux file permissions, and CLI IP diagnostics.',
+            'Analyzed TCP/IP model layers, transport protocols, full-duplex switching, and Wi-Fi/Li-Fi transmission.',
+            'Performed laptop & desktop hardware diagnostics (SO-DIMM RAM, ports, storage) and Windows Server 2016 user management.'
+          ],
+          tags: ['Linux CLI', 'TCP/IP Networking', 'Windows Server 2016', 'Hardware Diagnostics']
+        },
+        {
+          id: 'proj-mybharat',
+          title: 'Multilingual Digital Communication & VBYLD Youth Initiatives',
+          category: 'Innovation & Civic',
+          timeframe: '2026',
+          description: 'Active contributor in national digital literacy and leadership programs hosted on the MY Bharat and MyGov platforms, including MeitY\'s Vikaspedia 30-hour Digital Communication training.',
+          highlights: [
+            'Registered for the 30-hour Immersive Multilingual Digital Communication Program by Vikaspedia (MeitY).',
+            'Participated in the Viksit Bharat Young Leaders Dialogue (VBYLD) Quiz and Viksit Vibrant Village Program Quiz.',
+            'Attended MY Bharat national flagship webinars on Innovation & Entrepreneurship.'
+          ],
+          tags: ['Digital Communication', 'MY Bharat', 'MeitY Vikaspedia', 'Youth Leadership']
+        }
+      ],
+      skills: [
+        { id: 's1', name: 'Google AI Studio & Gemini API', category: 'AI & Software', level: 'Advanced' },
+        { id: 's2', name: 'Prompt Engineering & LLM Workflows', category: 'AI & Software', level: 'Advanced' },
+        { id: 's3', name: 'CSE (AI) Foundations (NIAT)', category: 'AI & Software', level: 'Intermediate' },
+        { id: 's4', name: 'Python & Web Fundamentals (HTML/JS)', category: 'AI & Software', level: 'Intermediate' },
+        { id: 's5', name: 'Linux OS & CLI Administration', category: 'Systems & Networking', level: 'Advanced' },
+        { id: 's6', name: 'TCP/IP Networking & Protocols', category: 'Systems & Networking', level: 'Advanced' },
+        { id: 's7', name: 'Computer Hardware & SO-DIMM Diagnostics', category: 'Systems & Networking', level: 'Advanced' },
+        { id: 's8', name: 'Windows Server 2016 Administration', category: 'Systems & Networking', level: 'Intermediate' },
+        { id: 's9', name: 'Dual-Boot & System Configuration', category: 'Systems & Networking', level: 'Advanced' },
+        { id: 's10', name: 'Microsoft 365 & Cloud Productivity', category: 'Digital & Communication', level: 'Advanced' },
+        { id: 's11', name: 'Multilingual Digital Communication', category: 'Digital & Communication', level: 'Advanced' },
+        { id: 's12', name: 'Visual Design & Video (Canva, Loom)', category: 'Digital & Communication', level: 'Intermediate' }
+      ],
+      checklist: [
+        { id: 'c1', title: '1. Clear Headline & Bio Positioning', desc: 'State your name, specialization (e.g., CSE AI), and core value proposition in the top hero banner.', done: true },
+        { id: 'c2', title: '2. 3+ Concrete Projects / Initiatives', desc: 'Showcase real projects, lab work, or innovation programs with clear outcomes and tags.', done: true },
+        { id: 'c3', title: '3. Categorized Technical Skills Matrix', desc: 'Group your skills by domain (AI, Networking, Tools) so recruiters can scan them in seconds.', done: true },
+        { id: 'c4', title: '4. Verified Education & Credentials', desc: 'Highlight your degree (Joy University × NIAT) and hands-on technical certifications.', done: true },
+        { id: 'c5', title: '5. Direct Contact & Exportable Link', desc: 'Include a one-click email link and host your HTML file on GitHub Pages or Netlify.', done: true }
+      ]
+    };
+
+    let state = loadState();
+
+    function loadState() {
+      try {
+        const raw = localStorage.getItem('hamdan_portfolio_state_v2');
+        if (raw) {
+          const parsed = JSON.parse(raw);
+          return Object.assign({}, JSON.parse(JSON.stringify(DEFAULT_STATE)), parsed);
+        }
+      } catch (e) {
+        // Fallback to in-memory default state
+      }
+      return JSON.parse(JSON.stringify(DEFAULT_STATE));
+    }
+
+    function saveState() {
+      try {
+        localStorage.setItem('hamdan_portfolio_state_v2', JSON.stringify(state));
+      } catch (e) {
+        // Ignore storage restrictions in sandboxed iframe
+      }
+    }
+
+    function showToast(message) {
+      const container = document.getElementById('toastContainer');
+      const toast = document.createElement('div');
+      toast.className = 'pointer-events-auto flex items-center justify-between gap-3 px-4 py-3 rounded-xl bg-slate-900 dark:bg-white text-white dark:text-slate-900 text-xs font-semibold shadow-lg border border-slate-700 dark:border-slate-200 transition-all duration-200';
+      toast.innerHTML = `<span>${escapeHtml(message)}</span>`;
+      container.appendChild(toast);
+      setTimeout(() => {
+        toast.style.opacity = '0';
+        setTimeout(() => toast.remove(), 220);
+      }, 2600);
+    }
+
+    function escapeHtml(str) {
+      return String(str || '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    }
+
+    function getInitials(name) {
+      const parts = String(name || 'HP').trim().split(/\s+/);
+      if (parts.length === 1) return parts[0].slice(0, 2).toUpperCase();
+      return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+    }
+
+    function applyTheme() {
+      const root = document.documentElement;
+      if (state.darkMode) {
+        root.classList.add('dark');
+      } else {
+        root.classList.remove('dark');
+      }
+      document.body.setAttribute('data-accent', state.accent || 'indigo');
+
+      document.querySelectorAll('.accent-swatch').forEach(btn => {
+        const swatchAccent = btn.getAttribute('data-theme-accent');
+        if (swatchAccent === state.accent) {
+          btn.classList.remove('opacity-70');
+          btn.classList.add('ring-2', 'ring-offset-1', 'dark:ring-offset-slate-900');
+        } else {
+          btn.classList.add('opacity-70');
+          btn.classList.remove('ring-2', 'ring-offset-1', 'dark:ring-offset-slate-900');
+        }
+      });
+    }
+
+    function renderProfile() {
+      const p = state.profile;
+      document.getElementById('navAvatar').textContent = getInitials(p.name);
+      document.getElementById('navName').textContent = p.name;
+      document.getElementById('heroName').textContent = p.name;
+      document.getElementById('heroBadge').textContent = p.badge;
+      document.getElementById('heroHeadline').textContent = p.headline;
+      document.getElementById('heroBio').textContent = p.bio;
+      document.getElementById('heroLocation').textContent = p.location;
+      document.getElementById('heroEmailText').textContent = p.email;
+      document.getElementById('heroEmailLink').href = 'mailto:' + p.email;
+      document.getElementById('footerEmailBtn').href = 'mailto:' + p.email;
+
+      const linkedinUrl = p.linkedin || 'https://in.linkedin.com/in/hamdan-h-310702317';
+      const linkedinLabel = linkedinUrl.replace(/^https?:\/\/(in\.|www\.)?/, '').replace(/\/+$/, '');
+      document.getElementById('heroLinkedinLink').href = linkedinUrl;
+      document.getElementById('heroLinkedinText').textContent = linkedinLabel;
+      document.getElementById('footerLinkedinBtn').href = linkedinUrl;
+
+      // Sync form inputs
+      document.getElementById('editName').value = p.name;
+      document.getElementById('editLocation').value = p.location;
+      document.getElementById('editEmail').value = p.email;
+      document.getElementById('editLinkedin').value = linkedinUrl;
+      document.getElementById('editBadge').value = p.badge;
+      document.getElementById('editHeadline').value = p.headline;
+      document.getElementById('editBio').value = p.bio;
+
+      // Update stats
+      document.getElementById('statProjectsCount').textContent = state.projects.length;
+      document.getElementById('statSkillsCount').textContent = state.skills.length;
+    }
+
+    function renderProjects() {
+      const grid = document.getElementById('projectsGrid');
+      const query = (state.projectSearch || '').toLowerCase().trim();
+      const cat = state.activeProjectCat || 'All';
+
+      // Update category tab active styles
+      document.querySelectorAll('.proj-tab-btn').forEach(btn => {
+        const isCurrent = btn.getAttribute('data-proj-cat') === cat;
+        btn.className = isCurrent
+          ? 'proj-tab-btn px-3 py-1.5 rounded-xl text-xs font-semibold accent-bg text-white transition'
+          : 'proj-tab-btn px-3 py-1.5 rounded-xl text-xs font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition';
+      });
+
+      const filtered = state.projects.filter(proj => {
+        const matchesCat = cat === 'All' || proj.category === cat;
+        const matchesSearch = !query ||
+          proj.title.toLowerCase().includes(query) ||
+          proj.description.toLowerCase().includes(query) ||
+          (proj.tags || []).some(t => t.toLowerCase().includes(query));
+        return matchesCat && matchesSearch;
+      });
+
+      if (filtered.length === 0) {
+        grid.innerHTML = `
+          <div class="col-span-full rounded-2xl bg-white dark:bg-slate-900 border border-dashed border-slate-300 dark:border-slate-800 p-8 text-center space-y-2">
+            <p class="text-sm font-semibold text-slate-700 dark:text-slate-300">No matching projects found</p>
+            <p class="text-xs text-slate-500 dark:text-slate-400">Try clearing your search filter or add a new project.</p>
+          </div>
+        `;
+        return;
+      }
+
+      grid.innerHTML = filtered.map(proj => `
+        <article class="group rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-indigo-500/50 dark:hover:border-indigo-400/50 p-6 flex flex-col justify-between gap-4 shadow-sm hover:shadow-md transition cursor-pointer" data-open-proj="${escapeHtml(proj.id)}">
+          <div class="space-y-3">
+            <div class="flex items-center justify-between gap-2">
+              <span class="px-2.5 py-1 rounded-lg text-xs font-semibold accent-pill">${escapeHtml(proj.category)}</span>
+              <span class="text-xs font-medium text-slate-400">${escapeHtml(proj.timeframe)}</span>
+            </div>
+            <h3 class="text-lg font-bold group-hover:accent-text transition">${escapeHtml(proj.title)}</h3>
+            <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed line-clamp-3">
+              ${escapeHtml(proj.description)}
+            </p>
+          </div>
+
+          <div class="space-y-3 pt-2">
+            <div class="flex flex-wrap gap-1.5">
+              ${(proj.tags || []).map(tag => `
+                <span class="px-2 py-0.5 rounded-md text-[11px] font-medium bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">${escapeHtml(tag)}</span>
+              `).join('')}
+            </div>
+            <div class="flex items-center justify-between text-xs font-semibold accent-text pt-1 border-t border-slate-100 dark:border-slate-800/80">
+              <span>View Details & Outcomes</span>
+              <span>→</span>
+            </div>
+          </div>
+        </article>
+      `).join('');
+
+      grid.querySelectorAll('[data-open-proj]').forEach(card => {
+        card.addEventListener('click', () => {
+          openProjectModal(card.getAttribute('data-open-proj'));
+        });
+      });
+    }
+
+    function renderSkills() {
+      const grid = document.getElementById('skillsGrid');
+      const cat = state.activeSkillCat || 'All';
+
+      document.querySelectorAll('.skill-tab-btn').forEach(btn => {
+        const isCurrent = btn.getAttribute('data-skill-cat') === cat;
+        btn.className = isCurrent
+          ? 'skill-tab-btn px-3 py-1.5 rounded-xl text-xs font-semibold accent-bg text-white transition'
+          : 'skill-tab-btn px-3 py-1.5 rounded-xl text-xs font-semibold bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition';
+      });
+
+      const filtered = state.skills.filter(s => cat === 'All' || s.category === cat);
+
+      grid.innerHTML = filtered.map(skill => `
+        <div class="rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-4 flex items-center justify-between gap-3">
+          <div class="min-w-0">
+            <div class="font-semibold text-sm truncate">${escapeHtml(skill.name)}</div>
+            <div class="text-xs text-slate-500 dark:text-slate-400 mt-0.5 flex items-center gap-2">
+              <span>${escapeHtml(skill.category)}</span>
+              <span>•</span>
+              <span class="accent-text font-medium">${escapeHtml(skill.level || 'Core')}</span>
+            </div>
+          </div>
+          <button type="button" data-remove-skill="${escapeHtml(skill.id)}" class="p-1.5 rounded-lg text-slate-400 hover:text-rose-500 hover:bg-slate-100 dark:hover:bg-slate-800 transition shrink-0" title="Remove skill" aria-label="Remove skill">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path>
+            </svg>
+          </button>
+        </div>
+      `).join('');
+
+      grid.querySelectorAll('[data-remove-skill]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const id = btn.getAttribute('data-remove-skill');
+          state.skills = state.skills.filter(s => s.id !== id);
+          saveState();
+          renderSkills();
+          renderProfile();
+          showToast('Skill removed from portfolio');
+        });
+      });
+    }
+
+    function renderChecklist() {
+      const container = document.getElementById('checklistContainer');
+      const doneCount = state.checklist.filter(c => c.done).length;
+      const total = state.checklist.length;
+      const pct = Math.round((doneCount / (total || 1)) * 100);
+
+      document.getElementById('checklistProgressText').textContent = `${doneCount} / ${total} Complete`;
+      document.getElementById('readinessBadge').textContent = `${pct}% Ready`;
+
+      container.innerHTML = state.checklist.map(item => `
+        <button type="button" data-toggle-check="${escapeHtml(item.id)}" class="w-full text-left p-3 rounded-xl border transition flex items-start gap-3 ${
+          item.done
+            ? 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800'
+            : 'bg-slate-100/60 dark:bg-slate-900/40 border-slate-200/60 dark:border-slate-800/50 opacity-75'
+        }">
+          <span class="mt-0.5 w-5 h-5 rounded-md flex items-center justify-center shrink-0 ${
+            item.done ? 'accent-bg text-white' : 'border border-slate-300 dark:border-slate-600'
+          }">
+            ${item.done ? '<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"></path></svg>' : ''}
+          </span>
+          <span class="space-y-0.5">
+            <span class="block text-xs font-bold ${item.done ? 'line-through text-slate-500 dark:text-slate-400' : ''}">${escapeHtml(item.title)}</span>
+            <span class="block text-[11px] text-slate-500 dark:text-slate-400 leading-snug">${escapeHtml(item.desc)}</span>
+          </span>
+        </button>
+      `).join('');
+
+      container.querySelectorAll('[data-toggle-check]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const id = btn.getAttribute('data-toggle-check');
+          const target = state.checklist.find(c => c.id === id);
+          if (target) {
+            target.done = !target.done;
+            saveState();
+            renderChecklist();
+          }
+        });
+      });
+    }
+
+    function openProjectModal(projId) {
+      const proj = state.projects.find(p => p.id === projId);
+      if (!proj) return;
+      state.activeModalProjectId = projId;
+
+      document.getElementById('modalSubtitle').textContent = 'Project Details';
+      document.getElementById('modalTitle').textContent = proj.title;
+      document.getElementById('modalCategoryPill').textContent = proj.category;
+      document.getElementById('modalTimeframe').textContent = proj.timeframe;
+      document.getElementById('modalDescription').textContent = proj.description;
+
+      const highlightsEl = document.getElementById('modalHighlights');
+      const items = (proj.highlights && proj.highlights.length > 0)
+        ? proj.highlights
+        : ['Documented project scope, technical implementation, and measurable outcomes.'];
+      highlightsEl.innerHTML = items.map(h => `<li>${escapeHtml(h)}</li>`).join('');
+
+      document.getElementById('modalTags').innerHTML = (proj.tags || []).map(t => `
+        <span class="px-2.5 py-1 rounded-md text-xs font-medium bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300">${escapeHtml(t)}</span>
+      `).join('');
+
+      document.getElementById('modalViewContent').classList.remove('hidden');
+      document.getElementById('projectFormContent').classList.add('hidden');
+
+      const modal = document.getElementById('projectModal');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+
+    function openProjectFormModal(projToEdit) {
+      const isEdit = Boolean(projToEdit);
+      document.getElementById('modalSubtitle').textContent = isEdit ? 'Edit Project' : 'Add New Project';
+      document.getElementById('modalTitle').textContent = isEdit ? projToEdit.title : 'Create Portfolio Entry';
+
+      document.getElementById('formProjectId').value = isEdit ? projToEdit.id : '';
+      document.getElementById('formProjTitle').value = isEdit ? projToEdit.title : '';
+      document.getElementById('formProjCat').value = isEdit ? projToEdit.category : 'AI & Tech';
+      document.getElementById('formProjTime').value = isEdit ? projToEdit.timeframe : '2026';
+      document.getElementById('formProjDesc').value = isEdit ? projToEdit.description : '';
+      document.getElementById('formProjHighlights').value = isEdit ? (projToEdit.highlights || []).join('\n') : '';
+      document.getElementById('formProjTags').value = isEdit ? (projToEdit.tags || []).join(', ') : '';
+
+      document.getElementById('modalViewContent').classList.add('hidden');
+      document.getElementById('projectFormContent').classList.remove('hidden');
+
+      const modal = document.getElementById('projectModal');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+
+    function closeProjectModal() {
+      const modal = document.getElementById('projectModal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+      state.activeModalProjectId = null;
+    }
+
+    function copyTextToClipboard(text, successMsg) {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(() => {
+          showToast(successMsg);
+        }).catch(() => {
+          fallbackCopy(text, successMsg);
+        });
+      } else {
+        fallbackCopy(text, successMsg);
+      }
+    }
+
+    function fallbackCopy(text, successMsg) {
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      ta.style.position = 'fixed';
+      ta.style.opacity = '0';
+      document.body.appendChild(ta);
+      ta.select();
+      try {
+        document.execCommand('copy');
+        showToast(successMsg);
+      } catch (e) {
+        showToast('Copied to buffer');
+      }
+      ta.remove();
+    }
+
+    function buildPortfolioSummaryText() {
+      const p = state.profile;
+      const projLines = state.projects.map(pr => `- ${pr.title} (${pr.timeframe}): ${pr.description}`).join('\n');
+      const skillList = state.skills.map(s => s.name).join(', ');
+      return `${p.name} — ${p.headline}\nLocation: ${p.location} | Email: ${p.email} | LinkedIn: ${p.linkedin || 'https://in.linkedin.com/in/hamdan-h-310702317'}\n\nSummary:\n${p.bio}\n\nFeatured Projects & Initiatives:\n${projLines}\n\nTechnical Skills:\n${skillList}`;
+    }
+
+    function initListeners() {
+      // Smooth section scrolling
+      document.querySelectorAll('.nav-scroll-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const targetId = btn.getAttribute('data-scroll');
+          const el = document.getElementById(targetId);
+          if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          document.getElementById('mobileNavPanel').classList.add('hidden');
+        });
+      });
+
+      // Mobile menu toggle
+      document.getElementById('mobileMenuBtn').addEventListener('click', () => {
+        document.getElementById('mobileNavPanel').classList.toggle('hidden');
+      });
+
+      // Dark mode toggle
+      document.getElementById('themeToggleBtn').addEventListener('click', () => {
+        state.darkMode = !state.darkMode;
+        saveState();
+        applyTheme();
+      });
+
+      // Accent theme buttons
+      document.querySelectorAll('.accent-swatch').forEach(btn => {
+        btn.addEventListener('click', () => {
+          state.accent = btn.getAttribute('data-theme-accent');
+          saveState();
+          applyTheme();
+        });
+      });
+
+      // Project category tabs
+      document.querySelectorAll('.proj-tab-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          state.activeProjectCat = btn.getAttribute('data-proj-cat');
+          renderProjects();
+        });
+      });
+
+      // Project search input
+      document.getElementById('projectSearchInput').addEventListener('input', e => {
+        state.projectSearch = e.target.value;
+        renderProjects();
+      });
+
+      // Skill category tabs
+      document.querySelectorAll('.skill-tab-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          state.activeSkillCat = btn.getAttribute('data-skill-cat');
+          renderSkills();
+        });
+      });
+
+      // Profile Editor Form
+      document.getElementById('profileEditorForm').addEventListener('submit', e => {
+        e.preventDefault();
+        state.profile.name = document.getElementById('editName').value.trim() || 'Hamdan P';
+        state.profile.location = document.getElementById('editLocation').value.trim();
+        state.profile.email = document.getElementById('editEmail').value.trim();
+        state.profile.linkedin = document.getElementById('editLinkedin').value.trim() || 'https://in.linkedin.com/in/hamdan-h-310702317';
+        state.profile.badge = document.getElementById('editBadge').value.trim();
+        state.profile.headline = document.getElementById('editHeadline').value.trim();
+        state.profile.bio = document.getElementById('editBio').value.trim();
+        saveState();
+        renderProfile();
+        showToast('Portfolio profile updated!');
+      });
+
+      // Add Skill Form
+      document.getElementById('addSkillForm').addEventListener('submit', e => {
+        e.preventDefault();
+        const nameInput = document.getElementById('newSkillName');
+        const catSelect = document.getElementById('newSkillCat');
+        const name = nameInput.value.trim();
+        if (!name) return;
+        state.skills.push({
+          id: 'skill-' + Date.now(),
+          name,
+          category: catSelect.value,
+          level: 'Proficient'
+        });
+        nameInput.value = '';
+        saveState();
+        renderSkills();
+        renderProfile();
+        showToast(`Added "${name}" to your skills!`);
+      });
+
+      // Open New Project Modal
+      document.getElementById('openNewProjectBtn').addEventListener('click', () => {
+        openProjectFormModal(null);
+      });
+
+      // Modal Close & Edit Controls
+      document.getElementById('closeModalBtn').addEventListener('click', closeProjectModal);
+      document.getElementById('cancelProjFormBtn').addEventListener('click', closeProjectModal);
+      document.getElementById('projectModal').addEventListener('click', e => {
+        if (e.target.id === 'projectModal') closeProjectModal();
+      });
+
+      document.getElementById('switchToEditProjectBtn').addEventListener('click', () => {
+        const proj = state.projects.find(p => p.id === state.activeModalProjectId);
+        if (proj) openProjectFormModal(proj);
+      });
+
+      document.getElementById('deleteProjectBtn').addEventListener('click', () => {
+        if (!state.activeModalProjectId) return;
+        state.projects = state.projects.filter(p => p.id !== state.activeModalProjectId);
+        saveState();
+        closeProjectModal();
+        renderProjects();
+        renderProfile();
+        showToast('Project removed');
+      });
+
+      // Save Project Form
+      document.getElementById('projectFormContent').addEventListener('submit', e => {
+        e.preventDefault();
+        const existingId = document.getElementById('formProjectId').value;
+        const title = document.getElementById('formProjTitle').value.trim();
+        const category = document.getElementById('formProjCat').value;
+        const timeframe = document.getElementById('formProjTime').value.trim();
+        const description = document.getElementById('formProjDesc').value.trim();
+        const highlights = document.getElementById('formProjHighlights').value
+          .split('\n')
+          .map(s => s.trim())
+          .filter(Boolean);
+        const tags = document.getElementById('formProjTags').value
+          .split(',')
+          .map(s => s.trim())
+          .filter(Boolean);
+
+        if (existingId) {
+          const idx = state.projects.findIndex(p => p.id === existingId);
+          if (idx !== -1) {
+            state.projects[idx] = { id: existingId, title, category, timeframe, description, highlights, tags };
+          }
+        } else {
+          state.projects.unshift({
+            id: 'proj-' + Date.now(),
+            title,
+            category,
+            timeframe,
+            description,
+            highlights,
+            tags
+          });
+        }
+
+        saveState();
+        closeProjectModal();
+        renderProjects();
+        renderProfile();
+        showToast(existingId ? 'Project updated!' : 'New project added!');
+      });
+
+      // Copy Summary & Email Buttons
+      document.getElementById('copyPortfolioBtn').addEventListener('click', () => {
+        copyTextToClipboard(buildPortfolioSummaryText(), 'Portfolio summary copied to clipboard!');
+      });
+
+      document.getElementById('copyEmailQuickBtn').addEventListener('click', () => {
+        copyTextToClipboard(state.profile.email, `Copied ${state.profile.email}!`);
+      });
+
+      // Download HTML Snapshot
+      document.getElementById('downloadHtmlBtn').addEventListener('click', () => {
+        const htmlContent = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
+        const blob = new Blob([htmlContent], { type: 'text/html;charset=utf-8' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'hamdan_portfolio.html';
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        URL.revokeObjectURL(url);
+        showToast('Downloaded hamdan_portfolio.html!');
+      });
+
+      // Reset Defaults
+      document.getElementById('resetDefaultBtn').addEventListener('click', () => {
+        state = JSON.parse(JSON.stringify(DEFAULT_STATE));
+        saveState();
+        applyTheme();
+        renderProfile();
+        renderProjects();
+        renderSkills();
+        renderChecklist();
+        showToast('Reset portfolio to default settings');
+      });
+    }
+
+    // Initialize App
+    applyTheme();
+    renderProfile();
+    renderProjects();
+    renderSkills();
+    renderChecklist();
+    initListeners();
+  </script>
+</body>
+</html>
