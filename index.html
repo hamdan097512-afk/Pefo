@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="en" class="dark">
 <head>
@@ -77,6 +78,7 @@
       <nav class="hidden md:flex items-center gap-1 text-sm font-medium">
         <button type="button" data-scroll="heroSection" class="nav-scroll-btn px-3 py-1.5 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition">Overview</button>
         <button type="button" data-scroll="projectsSection" class="nav-scroll-btn px-3 py-1.5 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition">Projects</button>
+        <button type="button" data-scroll="achievementsSection" class="nav-scroll-btn px-3 py-1.5 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition">Achievements</button>
         <button type="button" data-scroll="skillsSection" class="nav-scroll-btn px-3 py-1.5 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition">Skills</button>
         <button type="button" data-scroll="educationSection" class="nav-scroll-btn px-3 py-1.5 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition">Education</button>
         <button type="button" data-scroll="builderSection" class="nav-scroll-btn px-3 py-1.5 rounded-lg accent-pill font-semibold transition">Customize & Guide</button>
@@ -126,6 +128,7 @@
       <div class="grid grid-cols-2 gap-1.5 text-sm font-medium">
         <button type="button" data-scroll="heroSection" class="nav-scroll-btn text-left px-3 py-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800">Overview</button>
         <button type="button" data-scroll="projectsSection" class="nav-scroll-btn text-left px-3 py-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800">Projects</button>
+        <button type="button" data-scroll="achievementsSection" class="nav-scroll-btn text-left px-3 py-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800">Achievements</button>
         <button type="button" data-scroll="skillsSection" class="nav-scroll-btn text-left px-3 py-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800">Skills</button>
         <button type="button" data-scroll="educationSection" class="nav-scroll-btn text-left px-3 py-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800">Education</button>
         <button type="button" data-scroll="builderSection" class="nav-scroll-btn text-left px-3 py-2 rounded-lg accent-pill font-semibold col-span-2">Customize & Portfolio Guide</button>
@@ -178,6 +181,12 @@
               </svg>
               <span id="heroLinkedinText">linkedin.com/in/hamdan-h-310702317</span>
             </a>
+            <a id="heroGithubLink" href="https://github.com/hamdan097512-afk" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 bg-slate-100 dark:bg-slate-800/90 hover:bg-slate-200 dark:hover:bg-slate-800 px-3 py-1.5 rounded-lg transition">
+              <svg class="w-4 h-4 accent-text shrink-0" fill="currentColor" viewBox="0 0 24 24">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"></path>
+              </svg>
+              <span id="heroGithubText">github.com/hamdan097512-afk</span>
+            </a>
           </div>
 
           <!-- CTA Buttons -->
@@ -219,8 +228,8 @@
                 <div class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">NIAT × Joy Univ</div>
               </div>
               <div class="p-3.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200/70 dark:border-slate-800">
-                <div class="text-2xl font-extrabold accent-text">YIP</div>
-                <div class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">K-DISC Innovator</div>
+                <div id="statAchievementsCount" class="text-2xl font-extrabold accent-text">6</div>
+                <div class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Key Achievements</div>
               </div>
             </div>
 
@@ -271,6 +280,27 @@
 
       <!-- Project Cards Grid -->
       <div id="projectsGrid" class="grid grid-cols-1 md:grid-cols-2 gap-5"></div>
+    </section>
+
+    <!-- ACHIEVEMENTS & RECOGNITIONS SECTION -->
+    <section id="achievementsSection" class="space-y-6">
+      <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+        <div>
+          <span class="text-xs font-bold uppercase tracking-wider accent-text">Milestones & Honors</span>
+          <h2 class="text-2xl sm:text-3xl font-bold tracking-tight mt-1">Achievements & Recognitions</h2>
+          <p class="text-sm text-slate-600 dark:text-slate-400 mt-1">
+            State innovation selections, national youth leadership quizzes, competitive admissions, and developer credentials.
+          </p>
+        </div>
+        <div id="achievementCategoryTabs" class="flex flex-wrap gap-1.5">
+          <button type="button" data-ach-cat="All" class="ach-tab-btn px-3 py-1.5 rounded-xl text-xs font-semibold accent-bg text-white transition">All</button>
+          <button type="button" data-ach-cat="Innovation" class="ach-tab-btn px-3 py-1.5 rounded-xl text-xs font-semibold bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-300">Innovation</button>
+          <button type="button" data-ach-cat="Academic & Tech" class="ach-tab-btn px-3 py-1.5 rounded-xl text-xs font-semibold bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-300">Academic & Tech</button>
+          <button type="button" data-ach-cat="National & Civic" class="ach-tab-btn px-3 py-1.5 rounded-xl text-xs font-semibold bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-300">National & Civic</button>
+        </div>
+      </div>
+
+      <div id="achievementsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5"></div>
     </section>
 
     <!-- SKILLS & TECHNICAL DOMAINS SECTION -->
@@ -400,9 +430,15 @@
               </div>
             </div>
 
-            <div>
-              <label for="editLinkedin" class="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1">LinkedIn Profile URL</label>
-              <input id="editLinkedin" type="url" placeholder="https://in.linkedin.com/in/hamdan-h-310702317" class="w-full px-3 py-2 text-sm rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-indigo-500" required />
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label for="editLinkedin" class="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1">LinkedIn Profile URL</label>
+                <input id="editLinkedin" type="url" placeholder="https://in.linkedin.com/in/hamdan-h-310702317" class="w-full px-3 py-2 text-sm rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-indigo-500" required />
+              </div>
+              <div>
+                <label for="editGithub" class="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1">GitHub Profile URL</label>
+                <input id="editGithub" type="url" placeholder="https://github.com/hamdan097512-afk" class="w-full px-3 py-2 text-sm rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-indigo-500" required />
+              </div>
             </div>
 
             <div>
@@ -438,6 +474,31 @@
               <button type="submit" class="sm:col-span-3 px-3 py-2 rounded-xl text-xs font-semibold accent-bg accent-bg-hover text-white transition">
                 + Add Skill
               </button>
+            </form>
+          </div>
+
+          <!-- Quick Add Achievement Form -->
+          <div class="pt-4 border-t border-slate-200 dark:border-slate-800 space-y-3">
+            <h3 class="text-base font-bold flex items-center gap-2">
+              <span class="w-6 h-6 rounded-lg accent-pill flex items-center justify-center text-xs font-bold">3</span>
+              Add a New Achievement or Certification
+            </h3>
+            <form id="addAchievementForm" class="space-y-2.5">
+              <div class="grid grid-cols-1 sm:grid-cols-12 gap-2.5">
+                <input id="newAchTitle" type="text" placeholder="Achievement title (e.g. Hackathon Winner)" class="sm:col-span-5 px-3 py-2 text-xs rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700" required />
+                <input id="newAchIssuer" type="text" placeholder="Issuer / Organization & Year" class="sm:col-span-4 px-3 py-2 text-xs rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700" required />
+                <select id="newAchCat" class="sm:col-span-3 px-3 py-2 text-xs rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
+                  <option value="Innovation">Innovation</option>
+                  <option value="Academic & Tech">Academic & Tech</option>
+                  <option value="National & Civic">National & Civic</option>
+                </select>
+              </div>
+              <div class="grid grid-cols-1 sm:grid-cols-12 gap-2.5">
+                <input id="newAchDesc" type="text" placeholder="Short description of impact or recognition..." class="sm:col-span-9 px-3 py-2 text-xs rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700" required />
+                <button type="submit" class="sm:col-span-3 px-3 py-2 rounded-xl text-xs font-semibold accent-bg accent-bg-hover text-white transition">
+                  + Add Achievement
+                </button>
+              </div>
             </form>
           </div>
         </div>
@@ -487,6 +548,12 @@
             <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"></path>
           </svg>
           LinkedIn Profile
+        </a>
+        <a id="footerGithubBtn" href="https://github.com/hamdan097512-afk" target="_blank" rel="noopener noreferrer" class="px-5 py-2.5 rounded-xl text-sm font-semibold bg-slate-800 hover:bg-slate-700 text-white border border-slate-700 shadow-sm transition inline-flex items-center gap-2">
+          <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"></path>
+          </svg>
+          GitHub Profile
         </a>
         <button type="button" id="copyEmailQuickBtn" class="px-4 py-2.5 rounded-xl text-sm font-semibold bg-slate-800 hover:bg-slate-700 text-slate-100 border border-slate-700 transition">
           Copy Email Address
@@ -584,6 +651,7 @@
       darkMode: true,
       activeProjectCat: 'All',
       projectSearch: '',
+      activeAchCat: 'All',
       activeSkillCat: 'All',
       activeModalProjectId: null,
       profile: {
@@ -593,8 +661,53 @@
         bio: 'Pursuing Computer Science & Engineering (Artificial Intelligence) at Joy University in association with NxtWave Institute of Advanced Technologies (NIAT). Experienced in Generative AI prototyping with Google AI Studio, Linux & TCP/IP networking infrastructure, and state-level innovation programs through K-DISC\'s Young Innovators Programme (YIP).',
         location: 'Kerala / Bengaluru, India',
         email: 'hamdan097512@gmail.com',
-        linkedin: 'https://in.linkedin.com/in/hamdan-h-310702317'
+        linkedin: 'https://in.linkedin.com/in/hamdan-h-310702317',
+        github: 'https://github.com/hamdan097512-afk'
       },
+      achievements: [
+        {
+          id: 'ach-yip',
+          title: 'Young Innovators Programme (YIP 8.0 & 9.0) Idea Submitter',
+          issuer: 'K-DISC • Government of Kerala (2025 – 2026)',
+          category: 'Innovation',
+          description: 'Recognized for submitting community-focused technological problem statements and innovation proposals under Kerala\'s flagship state innovation program.'
+        },
+        {
+          id: 'ach-niat',
+          title: 'NxtWave Admission Test (NAT) Qualifier & NIAT Upskilling Slot',
+          issuer: 'NxtWave Institute of Advanced Technologies × Joy University (2026)',
+          category: 'Academic & Tech',
+          description: 'Qualified the national NAT assessment and secured admission into the 2026–2030 B.Tech CSE (Artificial Intelligence) upskilling program.'
+        },
+        {
+          id: 'ach-vbyld',
+          title: 'Viksit Bharat Young Leaders Dialogue (VBYLD) 2027 Quiz Recognition',
+          issuer: 'MY Bharat & MyGov • Ministry of Youth Affairs & Sports (Sept 2026)',
+          category: 'National & Civic',
+          description: 'Completed the national VBYLD 2027 knowledge assessment focused on India\'s developmental milestones and youth leadership vision.'
+        },
+        {
+          id: 'ach-mybharat-quizzes',
+          title: 'Viksit Vibrant Village & Budget Quest 2026 Quiz Participant',
+          issuer: 'MY Bharat Portal • Government of India (Feb & May 2026)',
+          category: 'National & Civic',
+          description: 'Actively engaged in national policy, union budget, and border-village experiential awareness competitions on the MY Bharat platform.'
+        },
+        {
+          id: 'ach-vikaspedia',
+          title: '30-Hour Immersive Multilingual Digital Communication Program',
+          issuer: 'Vikaspedia (MeitY) & MY Bharat (June 2026)',
+          category: 'Academic & Tech',
+          description: 'Enrolled in the Ministry of Electronics & IT initiative for multilingual digital communication, coupled with the Nasha Mukt Yuva campaign pledge.'
+        },
+        {
+          id: 'ach-copilot-cloud',
+          title: 'GitHub Copilot Developer & Google AI Studio Builder',
+          issuer: 'GitHub & Google DeepMind Ecosystem (2026)',
+          category: 'Academic & Tech',
+          description: 'Active developer workflow leveraging GitHub Copilot, Vercel cloud deployments, Google AI Studio Gemini API keys, and NSQF computing diagnostics.'
+        }
+      ],
       projects: [
         {
           id: 'proj-yip',
@@ -676,7 +789,7 @@
 
     function loadState() {
       try {
-        const raw = localStorage.getItem('hamdan_portfolio_state_v2');
+        const raw = localStorage.getItem('hamdan_portfolio_state_v3');
         if (raw) {
           const parsed = JSON.parse(raw);
           return Object.assign({}, JSON.parse(JSON.stringify(DEFAULT_STATE)), parsed);
@@ -689,7 +802,7 @@
 
     function saveState() {
       try {
-        localStorage.setItem('hamdan_portfolio_state_v2', JSON.stringify(state));
+        localStorage.setItem('hamdan_portfolio_state_v3', JSON.stringify(state));
       } catch (e) {
         // Ignore storage restrictions in sandboxed iframe
       }
@@ -761,11 +874,18 @@
       document.getElementById('heroLinkedinText').textContent = linkedinLabel;
       document.getElementById('footerLinkedinBtn').href = linkedinUrl;
 
+      const githubUrl = p.github || 'https://github.com/hamdan097512-afk';
+      const githubLabel = githubUrl.replace(/^https?:\/\/(www\.)?/, '').replace(/\/+$/, '');
+      document.getElementById('heroGithubLink').href = githubUrl;
+      document.getElementById('heroGithubText').textContent = githubLabel;
+      document.getElementById('footerGithubBtn').href = githubUrl;
+
       // Sync form inputs
       document.getElementById('editName').value = p.name;
       document.getElementById('editLocation').value = p.location;
       document.getElementById('editEmail').value = p.email;
       document.getElementById('editLinkedin').value = linkedinUrl;
+      document.getElementById('editGithub').value = githubUrl;
       document.getElementById('editBadge').value = p.badge;
       document.getElementById('editHeadline').value = p.headline;
       document.getElementById('editBio').value = p.bio;
@@ -773,6 +893,7 @@
       // Update stats
       document.getElementById('statProjectsCount').textContent = state.projects.length;
       document.getElementById('statSkillsCount').textContent = state.skills.length;
+      document.getElementById('statAchievementsCount').textContent = (state.achievements || []).length;
     }
 
     function renderProjects() {
@@ -837,6 +958,49 @@
       grid.querySelectorAll('[data-open-proj]').forEach(card => {
         card.addEventListener('click', () => {
           openProjectModal(card.getAttribute('data-open-proj'));
+        });
+      });
+    }
+
+    function renderAchievements() {
+      const grid = document.getElementById('achievementsGrid');
+      const cat = state.activeAchCat || 'All';
+
+      document.querySelectorAll('.ach-tab-btn').forEach(btn => {
+        const isCurrent = btn.getAttribute('data-ach-cat') === cat;
+        btn.className = isCurrent
+          ? 'ach-tab-btn px-3 py-1.5 rounded-xl text-xs font-semibold accent-bg text-white transition'
+          : 'ach-tab-btn px-3 py-1.5 rounded-xl text-xs font-semibold bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition';
+      });
+
+      const list = (state.achievements || []).filter(a => cat === 'All' || a.category === cat);
+
+      grid.innerHTML = list.map(ach => `
+        <div class="rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-5 flex flex-col justify-between gap-4 shadow-sm">
+          <div class="space-y-2.5">
+            <div class="flex items-center justify-between gap-2">
+              <span class="px-2.5 py-1 rounded-lg text-xs font-semibold accent-pill">${escapeHtml(ach.category)}</span>
+              <button type="button" data-remove-ach="${escapeHtml(ach.id)}" class="p-1 rounded-lg text-slate-400 hover:text-rose-500 hover:bg-slate-100 dark:hover:bg-slate-800 transition" title="Remove achievement" aria-label="Remove achievement">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+              </button>
+            </div>
+            <h3 class="text-base font-bold leading-snug">${escapeHtml(ach.title)}</h3>
+            <p class="text-xs font-semibold accent-text">${escapeHtml(ach.issuer)}</p>
+            <p class="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">${escapeHtml(ach.description)}</p>
+          </div>
+        </div>
+      `).join('');
+
+      grid.querySelectorAll('[data-remove-ach]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const id = btn.getAttribute('data-remove-ach');
+          state.achievements = (state.achievements || []).filter(a => a.id !== id);
+          saveState();
+          renderAchievements();
+          renderProfile();
+          showToast('Achievement removed');
         });
       });
     }
@@ -1012,8 +1176,9 @@
     function buildPortfolioSummaryText() {
       const p = state.profile;
       const projLines = state.projects.map(pr => `- ${pr.title} (${pr.timeframe}): ${pr.description}`).join('\n');
+      const achLines = (state.achievements || []).map(a => `- ${a.title} (${a.issuer})`).join('\n');
       const skillList = state.skills.map(s => s.name).join(', ');
-      return `${p.name} — ${p.headline}\nLocation: ${p.location} | Email: ${p.email} | LinkedIn: ${p.linkedin || 'https://in.linkedin.com/in/hamdan-h-310702317'}\n\nSummary:\n${p.bio}\n\nFeatured Projects & Initiatives:\n${projLines}\n\nTechnical Skills:\n${skillList}`;
+      return `${p.name} — ${p.headline}\nLocation: ${p.location} | Email: ${p.email}\nLinkedIn: ${p.linkedin || 'https://in.linkedin.com/in/hamdan-h-310702317'} | GitHub: ${p.github || 'https://github.com/hamdan097512-afk'}\n\nSummary:\n${p.bio}\n\nKey Achievements:\n${achLines}\n\nFeatured Projects & Initiatives:\n${projLines}\n\nTechnical Skills:\n${skillList}`;
     }
 
     function initListeners() {
@@ -1062,6 +1227,14 @@
         renderProjects();
       });
 
+      // Achievement category tabs
+      document.querySelectorAll('.ach-tab-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          state.activeAchCat = btn.getAttribute('data-ach-cat');
+          renderAchievements();
+        });
+      });
+
       // Skill category tabs
       document.querySelectorAll('.skill-tab-btn').forEach(btn => {
         btn.addEventListener('click', () => {
@@ -1077,6 +1250,7 @@
         state.profile.location = document.getElementById('editLocation').value.trim();
         state.profile.email = document.getElementById('editEmail').value.trim();
         state.profile.linkedin = document.getElementById('editLinkedin').value.trim() || 'https://in.linkedin.com/in/hamdan-h-310702317';
+        state.profile.github = document.getElementById('editGithub').value.trim() || 'https://github.com/hamdan097512-afk';
         state.profile.badge = document.getElementById('editBadge').value.trim();
         state.profile.headline = document.getElementById('editHeadline').value.trim();
         state.profile.bio = document.getElementById('editBio').value.trim();
@@ -1103,6 +1277,30 @@
         renderSkills();
         renderProfile();
         showToast(`Added "${name}" to your skills!`);
+      });
+
+      // Add Achievement Form
+      document.getElementById('addAchievementForm').addEventListener('submit', e => {
+        e.preventDefault();
+        const title = document.getElementById('newAchTitle').value.trim();
+        const issuer = document.getElementById('newAchIssuer').value.trim();
+        const category = document.getElementById('newAchCat').value;
+        const description = document.getElementById('newAchDesc').value.trim();
+        if (!title || !issuer) return;
+        state.achievements.unshift({
+          id: 'ach-' + Date.now(),
+          title,
+          issuer,
+          category,
+          description
+        });
+        document.getElementById('newAchTitle').value = '';
+        document.getElementById('newAchIssuer').value = '';
+        document.getElementById('newAchDesc').value = '';
+        saveState();
+        renderAchievements();
+        renderProfile();
+        showToast(`Added achievement "${title}"!`);
       });
 
       // Open New Project Modal
@@ -1204,6 +1402,7 @@
         applyTheme();
         renderProfile();
         renderProjects();
+        renderAchievements();
         renderSkills();
         renderChecklist();
         showToast('Reset portfolio to default settings');
@@ -1214,9 +1413,11 @@
     applyTheme();
     renderProfile();
     renderProjects();
+    renderAchievements();
     renderSkills();
     renderChecklist();
     initListeners();
   </script>
 </body>
 </html>
+```
